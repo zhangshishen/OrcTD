@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 public interface tracer
 {
-	bool traceEnemy(Vector3 target);
+	bool traceEnemy(Vector3 target);    //adjust direction and position
 }
 
 
-public class routeCalc
+public class routeCalc                  //a tools class for calculate route, using bezier, spline
 {             //calculate bullet which has fixed route
     public static Vector3[] array = new Vector3[10];
     public static Vector3[] point = new Vector3[10];

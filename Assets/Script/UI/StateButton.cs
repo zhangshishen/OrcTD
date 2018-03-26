@@ -1,12 +1,7 @@
 using UnityEngine;
-
 using System.Collections;
-
 using UnityEngine.UI;
-
 using UnityEngine.EventSystems;
-
-
 
 
 public delegate void buttonCallback();
@@ -26,8 +21,6 @@ public class StateButton : EventTrigger
 
     public override void OnPointerEnter(PointerEventData data){
         showInstruction();
-
-
     }
     public override void OnPointerExit(PointerEventData data){
         //print("leave"); 
@@ -45,12 +38,8 @@ public class StateButton : EventTrigger
         GameObject go = Resources.Load("UI/DisplayPanel") as GameObject;
         go = Instantiate(go,GlobalRef.canvas.transform);
         gameobj = go;
-        //if(go==null) print("gonull");
-        //Transform to = go.GetComponent<Transform>().Find("Text");
-        //to.GetComponent<Text>().text = instruction;
+
         go.transform.position = Input.mousePosition;
 
     }
-	
-
 }

@@ -28,7 +28,10 @@ public class MainView : MonoBehaviour {
             //EventSystem.current.
 
             GameObject go = EventSystem.current.currentSelectedGameObject;
-            if (go == null) print("null");
+            if (go == null) {
+                print("null");
+                return;
+            }
             if(go.CompareTag("Button")){
                 callback call = (callback)GlobalRef.mainModel.callBackHashTable[go];
                 call();

@@ -45,7 +45,7 @@ public class Model : MonoBehaviour {        //create and delete monster
 
     private static float timeBeforeStart = 3;      
 
-    public List<Monster> MonsterList = new List<Monster>();
+    public List<Attackable> AttackableList = new List<Attackable>();
     public List<Tower> TowerList = new List<Tower>();
     public List<int> MonsterNum = new List<int>();
 
@@ -120,7 +120,6 @@ public class Model : MonoBehaviour {        //create and delete monster
 					CreateEnemy(time % monsterFrequency);
                 }
                  
-
             }
         }
 
@@ -163,7 +162,7 @@ public class Model : MonoBehaviour {        //create and delete monster
         monsterVector.RemoveAt(monsterVector.Count - 1);
         monster = Instantiate(monster,bornPoint,rotate);
         Monster temp = monster.GetComponent<Monster>();
-        MonsterList.Add(temp);
+        AttackableList.Add(temp);
 
         temp.ID = curID;
 
@@ -173,13 +172,13 @@ public class Model : MonoBehaviour {        //create and delete monster
 
 
     }
-    public Monster getEnemyByID(int id){
+    public Attackable getEnemyByID(int id){
 		//List<Monster>.Enumerator mE = MonsterList.GetEnumerator();
 		//List<int>.Enumerator iE = MonsterNum.GetEnumerator();
 
         //print("count=" + MonsterList.Count);
-        foreach(var mons in MonsterList){
-            if (mons.ID == id)
+        foreach(var mons in AttackableList){
+            if (mons.getID() == id)
                 return mons;
         }
         return null;
@@ -190,13 +189,11 @@ public class Model : MonoBehaviour {        //create and delete monster
     {
 		/*TODO*/
 
-		foreach (var mons in MonsterList)
+		foreach (var mons in AttackableList)
 		{
-            if (mons.ID == id){
-                mons.anim.SetTrigger("died");
-                mons.prop.totalSpeed = 1;
-                Destroy(mons.gameObject, 2);
-                MonsterList.Remove(mons);
+            if (mons.getID() == id){
+                mons.died();
+                AttackableList.Remove(mons);
                 return;
                 /*TODO*/
 

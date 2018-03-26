@@ -27,9 +27,7 @@ public class CanonShell : Bullet
 	{
         base.initBullet(attackable);
 
-
         pos[0] = trans.position;
-
         targetPositionRevise();
 	}
 
@@ -50,8 +48,6 @@ public class CanonShell : Bullet
     {
 		GameObject go = Resources.Load("Canon/CanonSmoke") as GameObject;
         go = Instantiate(go,trans.position,trans.rotation);
-        //print("diedeff");
-        //transform.position
 	}
 
 
@@ -77,8 +73,7 @@ public class CanonShell : Bullet
             isAlive = false;
 		}
 		traceEnemy(dest);
-        //print("x="+targetTransform.position.x+" y="+targetTransform.position.y+" z="+targetTransform.position.z);
-        //print("x=" + transform.position.x + " y=" + transform.position.y + " z=" + transform.position.z);
+
 		if ((pos[2] - transform.position).magnitude < 0.7f)
 		{
             if (isAlive != false)

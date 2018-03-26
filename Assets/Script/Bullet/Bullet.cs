@@ -9,6 +9,7 @@ public class Bullet : MonoBehaviour,tracer,Hurtable
     protected float speed;
     protected float attack;
     protected float curTime;
+
     protected bool isAlive = true;
 
     public int attackType;
@@ -18,8 +19,7 @@ public class Bullet : MonoBehaviour,tracer,Hurtable
     public Transform trans;
     public Transform targetTransform;
     public Vector3 dest;
-	//public Model mainModel;
-	//public delegate BulletCallBack;
+
     int targetID;
 
     protected Attackable mons;
@@ -72,7 +72,7 @@ public class Bullet : MonoBehaviour,tracer,Hurtable
     }
 
     public virtual bool bulletUpdate(){
-        if(GlobalRef.mainModel.getEnemyByID(targetID))
+        if (GlobalRef.mainModel.getEnemyByID(targetID) != null)
             return true;
         return false;
     }

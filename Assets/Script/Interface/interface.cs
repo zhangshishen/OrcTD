@@ -3,13 +3,21 @@ using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
 public enum towerState { Building, Living, Sleeping };
+
+public enum objectType { TypeBuilding, TypeMonster, TypeSoldier };
+
 public delegate void towerCallback();
 public interface Attackable     //everything can be hurt
 {
 	void beHurt(Hurtable bullet);
     Transform getTransform();
     int getID();
+    void died();
+    objectType getType();
 }
+
+
+
 
 public enum AttackType {COMMON,AROW,MAGIC,PURE};
 public enum ArmorType {LIGHT,HEAVY,BUILDING,NONE};

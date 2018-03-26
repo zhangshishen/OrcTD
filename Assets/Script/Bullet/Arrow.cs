@@ -24,7 +24,6 @@ public class Arrow: Bullet
         if (t >= 1.0f) t = 1.0f;
 
         this.transform.position = routeCalc.line(trans.position,targetTransform.position,t,out dir);
-
         this.transform.LookAt(targetTransform.position);
 
         tempV.Set(targetTransform.position.x,targetTransform.position.y,targetTransform.position.z);
@@ -37,7 +36,6 @@ public class Arrow: Bullet
 		
 		if (bulletUpdate() == false)
 		{
-            
             isAlive = false;
 			curTime += Time.deltaTime;
 			float t = curTime * speed;

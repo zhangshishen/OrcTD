@@ -50,18 +50,20 @@ public class TowerBase : Choosable,MessageReceiver
         Destroy(child);
         loseFocus();
     }
-    public void callback0(){
+    public void callback0(){    //create tower0
         GameObject BulletObj = Resources.Load("Canon/Tower") as GameObject;
         BulletObj = Instantiate(BulletObj,GlobalRef.mainView.curFocus.position,new Quaternion());
         child = BulletObj;
         loseFocus();
+        this.enable = false;
     }
 	public void callback1()
-	{
+	{                           //create tower1
 		GameObject BulletObj = Resources.Load("RoundTower/ArrowTower") as GameObject;
 		BulletObj = Instantiate(BulletObj, GlobalRef.mainView.curFocus.position, new Quaternion());
         child = BulletObj;
         loseFocus();
+        this.enable = false;
 	}
 	
     public override void OnClick(Vector3 ScreenPoint)

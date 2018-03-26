@@ -2,9 +2,10 @@ using UnityEngine;
 
 using System.Collections;
 using UnityEngine.UI;
-public class Monster : MonoBehaviour,Attackable
+public class Monster : Choosable,Attackable
 {
     // Use this for initialization
+
     public Slider slider;
     //public NavMeshAgent nav;
     Vector3 dest = new Vector3(5.93f,0,2);
@@ -12,39 +13,45 @@ public class Monster : MonoBehaviour,Attackable
     public Animator anim;
     Navigator navigator;
     Transform transform;
+
     int curNavi = 0;
     Vector3 curDest;
 
+
     //need to set for every enemy
-    public MonsterProperties prop = new Goblin();
+    public MonsterProperties prop;
 
     private float deltaTime;
     public int ID;
 
     bool isDied = false;
 
+
+
 	void Awake()
 	{
-        
-
 
 		navigator = GameObject.FindGameObjectWithTag("Navi").GetComponent<Navigator>();
 
-        anim = GetComponent<Animator>();
-        anim.speed = prop.totalSpeed;
+
 
 		transform = GetComponent<Transform>();
+
         transform.LookAt(navigator.naviPoint[2]);
+        prop = new Goblin(transform.position);
+
+		anim = GetComponent<Animator>();
+		anim.speed = prop.totalSpeed;
 
 		slider = transform.Find("Canvas").transform.Find("Slider").GetComponent<Slider>();
 		slider.maxValue = prop.life;
 		slider.minValue = 0.0f;
 
-        updateUI();
+        updateBloodUI();
 
 	}
     private Vector3 temp = new Vector3();
-    private void updateUI(){
+    private void updateBloodUI(){
         temp.x = transform.position.x;
         temp.y = transform.position.y + 3.7f;
         temp.z = transform.position.z;
@@ -63,6 +70,14 @@ public class Monster : MonoBehaviour,Attackable
     }
     public int getID(){
         return ID;
+    }
+    public objectType getType(){
+        return objectType.TypeMonster;
+    }
+    public void died(){
+		anim.SetTrigger("died");
+		prop.totalSpeed = 1;
+		Destroy(gameObject, 2);
     }
     void updateNavi(){
         
@@ -115,7 +130,8 @@ public class Monster : MonoBehaviour,Attackable
 	void Update()
     {
         updateAnimState();
-        updateUI();
+
+        updateBloodUI();
         slider.value = prop.life;
         if(isDied){
 
@@ -126,6 +142,7 @@ public class Monster : MonoBehaviour,Attackable
         updatePos();
         Vector3 cur = (GetComponent<Transform>().position - dest);
         if (cur.magnitude < 1.1f){
+            //arrive destination
             //point
             /*
 
@@ -139,8 +156,17 @@ public class Monster : MonoBehaviour,Attackable
 
     public void beHurt(Hurtable bullet){
         float coef = ArmorCalc.GetCoefficient(bullet.getType(),prop.GetArmortype());
-        print("coef=" + coef);
-        prop.life-=bullet.getDamage() * coef;
+        //print("coef=" + coef);
+
+        //damage calculate fomula
+        float f = Mathf.Atan(prop.getArmorNum()/10);
+        f = 1 - f / Mathf.PI * 2;
+
+        Debug.Log(f);
+
+        prop.life-=bullet.getDamage() * coef*(f);
+
+
         if (prop.life<=0){
             isDied = true;
             GlobalRef.mainModel.EnemyDied(ID);
