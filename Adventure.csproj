@@ -144,7 +144,8 @@
     <Compile Include="Assets\Script\Monster\Witcher.cs" />
     <Compile Include="Assets\Script\Effect\Effect.cs" />
     <Compile Include="Assets\Script\Effect\RangeEffect.cs" />
-    <Compile Include="Assets\Script\Interface\Attacker.cs" />
+    <Compile Include="Assets\Script\Interface\Attacker\Attacker.cs" />
+    <Compile Include="Assets\Script\Interface\Attacker\ArrowAttacker.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Surfaces Lite\Demo Scene\Data\Read Me!.txt" />

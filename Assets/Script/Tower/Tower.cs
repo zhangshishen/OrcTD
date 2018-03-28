@@ -44,7 +44,7 @@ public class Tower : Choosable, MessageReceiver
 		prop.SetFrequency(1.0f);
 		prop.SetAttackRange(8.0f);
         attackerbase = new AttackerBase(prop);
-        Debug.Log(GetComponent<Transform>().position);
+        //Debug.Log(GetComponent<Transform>().position);
     }
 
     public void uicallback0(){

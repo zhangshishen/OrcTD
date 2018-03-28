@@ -22,20 +22,10 @@ public class MainView : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         //UI highLight
-		if (EventSystem.current.IsPointerOverGameObject())
-		{//click on the ui
-         //return true;
-            //EventSystem.current.
-
-            GameObject go = EventSystem.current.currentSelectedGameObject;
-            if (go == null) {
-                print("null");
-                return;
-            }
-            if(go.CompareTag("Button")){
-                callback call = (callback)GlobalRef.mainModel.callBackHashTable[go];
-                call();
-            }
+		if (EventSystem.current.IsPointerOverGameObject())  //click on the ui
+		{
+            GameObject go = EventSystem.current.currentSelectedGameObject;     
+            return;
 		}
 
 		//camera move
@@ -45,6 +35,11 @@ public class MainView : MonoBehaviour {
             camT.position = vec;
         }
 
+		if (Input.GetMouseButtonDown(0))    //clear temp dialog
+		{
+			
+
+		}
         //mouse pick choosable
 		if (Input.GetMouseButtonUp(0))
 		{
@@ -55,7 +50,7 @@ public class MainView : MonoBehaviour {
 		}
 
 	}
-    bool mousePick()
+    bool mousePick()        //test if click on GameObject(NO UI)
     {
         //Transform ta = GetComponent<Transform>();
         //Vector3 v3(ta);
@@ -64,10 +59,14 @@ public class MainView : MonoBehaviour {
         Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if(Physics.Raycast(camRay, out floorHit, 1000f, ClickMask)){
+            
+
 			if (EventSystem.current.IsPointerOverGameObject())
 			{//click on the ui
 				return true;
 			}
+
+
             if (curFocus != floorHit.transform){
                 if(curFocus!=null)
                     curFocus.GetComponent<Choosable>().loseFocus();
@@ -81,14 +80,10 @@ public class MainView : MonoBehaviour {
             curFocus.GetComponent<Choosable>().OnClick(Input.mousePosition);
 
             return true;
-        }else {
-			if (EventSystem.current.IsPointerOverGameObject())
-			{//click on the ui
-				return true;
-			}
+        } else {
             //print("no focus");
             if(curFocus!=null){
-                //print("lose focus");
+
                 curFocus.GetComponent<Choosable>().loseFocus();
                 curFocus = null;
             }

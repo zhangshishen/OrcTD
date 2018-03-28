@@ -22,17 +22,14 @@ public class AttackerBase
     }
 	public virtual Bullet GetBullet()
 	{
-		/*TODO override*/
 		GameObject BulletObj = Resources.Load(url) as GameObject;
 		BulletObj = GameObject.Instantiate(BulletObj);
 		Vector3 vec = new Vector3(prop.pos.x, prop.pos.y + 3, prop.pos.z);
 		BulletObj.GetComponent<Transform>().position = vec;
-
 		return BulletObj.GetComponent<Bullet>();
-		//return null;
 	}
 
-	public void attack(Attackable trans)
+	public virtual void attack(Attackable trans)
 	{
 		Bullet bullet = GetBullet();
 		bullet.initBullet(trans);
@@ -83,13 +80,9 @@ public class AttackerBase
 		{
             
             Vector3 v = mons.getTransform().position - prop.pos;
-            //Debug.Log(prop.pos);
             if ((isEnemy(mons.getType()))&&v.magnitude <= prop.GetAttackRange())
 			{
                 targetID = mons.getID();
-				/*TODO hit monster*/
-                //Debug.Log("start update\n");
-				//setRotate(mons.transform);
                 if (curInterval < prop.GetFrequency())
 				{
 					return;

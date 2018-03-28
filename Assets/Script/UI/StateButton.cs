@@ -32,6 +32,7 @@ public class StateButton : EventTrigger
             //print("unnull");
             if (gameobj.activeSelf == false)
                 gameobj.SetActive(true);
+            gameobj.GetComponent<RectTransform>().pivot.Set(0,0);
 			gameobj.transform.position = Input.mousePosition;
             return;
         }

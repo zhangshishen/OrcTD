@@ -162,7 +162,7 @@ public class Monster : Choosable,Attackable
         float f = Mathf.Atan(prop.getArmorNum()/10);
         f = 1 - f / Mathf.PI * 2;
 
-        Debug.Log(f);
+        //Debug.Log(f);
 
         prop.life-=bullet.getDamage() * coef*(f);
 

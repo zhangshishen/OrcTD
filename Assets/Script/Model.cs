@@ -21,6 +21,7 @@ using UnityEngine;
 public class GlobalRef{
     public static Model mainModel;
     public static MainView mainView;
+    public static GameObject tempObj;
     public static Model getModel(){
         return mainModel;
     }
@@ -132,19 +133,21 @@ public class Model : MonoBehaviour {        //create and delete monster
         
     }
     public void updateWave(float deltaTime){
-        curTime = 0;
+
         if(monsterNumber.Count == 0){
             GameOver();
         }else{
+            curTime = 0;
             curMonsterNumber = 0;
             TotalMonsterNumber = monsterNumber[monsterNumber.Count - 1];
             monsterNumber.RemoveAt(monsterNumber.Count - 1);
             curTime = deltaTime;
-
+            //print(monsterNumber.Count);
         }
     }
     public void GameOver(){
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        //print("gameover");
     }
     public void BuildTower(Vector3 v){
         
@@ -158,15 +161,17 @@ public class Model : MonoBehaviour {        //create and delete monster
 
     void CreateEnemy(float delta){
         //print(monsterVector.Count);
+
         GameObject monster = (GameObject)Resources.Load(monsterVector[monsterVector.Count - 1]);
         monsterVector.RemoveAt(monsterVector.Count - 1);
         monster = Instantiate(monster,bornPoint,rotate);
         Monster temp = monster.GetComponent<Monster>();
+
         AttackableList.Add(temp);
 
         temp.ID = curID;
 
-        monsterNumber.Add(curID);
+        //monsterNumber.Add(curID);
         curID++;
         //monster.GetComponent<Animator>();
 

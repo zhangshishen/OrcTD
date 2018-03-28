@@ -4,6 +4,7 @@ using System.Collections;
 public class CanonShell : Bullet
 {
 	Vector3[] pos = new Vector3[3];
+
     ParticleSystem dieParticle;
 
 

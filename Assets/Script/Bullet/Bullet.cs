@@ -30,7 +30,7 @@ public class Bullet : MonoBehaviour,tracer,Hurtable
         return attack;
     }
     public virtual AttackType getType(){
-        print("attype=" + (AttackType)attackType);
+        //print("attype=" + (AttackType)attackType);
         return (AttackType)attackType;
     }
     public AttackEffect getAE(){
