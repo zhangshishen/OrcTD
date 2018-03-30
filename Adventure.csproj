@@ -146,6 +146,9 @@
     <Compile Include="Assets\Script\Effect\RangeEffect.cs" />
     <Compile Include="Assets\Script\Interface\Attacker\Attacker.cs" />
     <Compile Include="Assets\Script\Interface\Attacker\ArrowAttacker.cs" />
+    <Compile Include="Assets\Script\Skill\AdjSkill.cs" />
+    <Compile Include="Assets\Script\Skill\Skill.cs" />
+    <Compile Include="Assets\Script\Skill\PassiveSkill.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Surfaces Lite\Demo Scene\Data\Read Me!.txt" />

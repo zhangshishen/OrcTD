@@ -21,11 +21,15 @@ using UnityEngine;
 public class GlobalRef{
     public static Model mainModel;
     public static MainView mainView;
-    public static GameObject tempObj;
+
+
+
     public static Model getModel(){
         return mainModel;
     }
-    public static Canvas canvas;
+    public static Choosable focus;
+
+	public static Canvas canvas;
 	public static Vector3 WorldToUIPoint(Canvas canvas, Transform worldGo)
 	{
 		Vector3 v_v3 = Camera.main.WorldToScreenPoint(worldGo.position);

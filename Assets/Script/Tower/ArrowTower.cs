@@ -9,6 +9,7 @@ public class ArrowTower : Tower
 
 		/*TODO set parameter*/
 		prop = new TowerProperties(GetComponent<Transform>().position);
+
 		prop.SetFrequency(0.5f);
 		prop.SetAttackRange(13.0f);
 		attackerbase = new ArrowAttacker(prop);
@@ -24,7 +25,6 @@ public class ArrowTower : Tower
 	// Update is called once per frame
 	void Update()
 	{
-        
         base.Update();
 	}
 }

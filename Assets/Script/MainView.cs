@@ -12,11 +12,25 @@ public class MainView : MonoBehaviour {
     private Transform camT;
     int ClickMask;
 
+    public Skill preSkill;  //point before
+
+    public static Dictionary<string,UIButton> UIRegister = new Dictionary<string, UIButton>();
+
+    public Choosable focus;
+
+    public Canvas canvas;
+
     private float move_speed = 3.0f;
+
 	void Start () {
+        
+        canvas = GameObject.FindGameObjectWithTag("ChooseCanvas").GetComponent<Canvas>();
+
         GlobalRef.mainView = this;
         camT = mainCam.GetComponent<Transform>();
         ClickMask = LayerMask.GetMask("Pointable");
+
+
 	}
 	
 	// Update is called once per frame
@@ -35,11 +49,13 @@ public class MainView : MonoBehaviour {
             camT.position = vec;
         }
 
+
 		if (Input.GetMouseButtonDown(0))    //clear temp dialog
 		{
-			
+			//GlobalRef.hideTemp();
 
 		}
+
         //mouse pick choosable
 		if (Input.GetMouseButtonUp(0))
 		{
@@ -48,8 +64,17 @@ public class MainView : MonoBehaviour {
             }
 
 		}
+        showData();
 
 	}
+    void showData(){
+        if (curFocus == null) return;
+        Choosable foc = curFocus.GetComponent<Choosable>();
+        var instruction = foc.getUI();
+
+
+
+    }
     bool mousePick()        //test if click on GameObject(NO UI)
     {
         //Transform ta = GetComponent<Transform>();
@@ -91,29 +116,5 @@ public class MainView : MonoBehaviour {
         }
 
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        print("asd");
-    }
-    private void OnMouseUp()
-    {
-        
-    }
-
-    void DrawPrimitive(){
-        
-    }
-    void DisplayUI()
-    {
-
-    }
-    void DrawUI(){
-        
-    }
-    void DrawScore(){
-        
-    }
-    void DrawScoreBoard(){
-        
-    }
+	
 }

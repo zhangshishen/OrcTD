@@ -14,10 +14,10 @@ public class Choosable : MonoBehaviour
     public Transform parent = null;    //father canvas
     public GameObject UIObject; //UI to show
     public Model model;         //main model
-
+    public string UITag;
     //Canvas UICanvas;            //main UI canvas
     public Canvas parentCanvas = GlobalRef.canvas;
-    // Use this for initialization
+
     public bool isFocus;
     public Transform trans;
 
@@ -25,10 +25,48 @@ public class Choosable : MonoBehaviour
 
     public UIElement UIItem;
 
+    //public List<UIButton> sharedButtonList;
+
+    public string[] instruction;
+    public MonsterProperties prop;
+
     //private bool enable = true;
     protected virtual void SetEnable(bool enable){
         this.enable = enable;
     }
+
+	public virtual List<UIButton> getUI()
+	{
+		List<UIButton> ls = new List<UIButton>();
+
+        if (prop.Skill == null) return ls;
+
+		foreach (var ele in prop.Skill)
+		{
+			ls.Add(new UIButton(ele.ImgURL, new UnityAction(ele.callBack)));
+		}
+
+		return ls;
+	}
+
+	public virtual string[] getInstruction()
+	{
+        string[] res = new string[6];
+
+        if (prop.type == "other") return null;
+
+        res[0] = prop.attack.ToString("0000.0");
+        res[1] = prop.armor.ToString("0000.0");
+        res[2] = prop.speed.ToString("0000.0");
+
+        res[3] = prop.GetAttack().ToString("0000.0");
+        res[4] = prop.getArmorNum().ToString("0000.0");
+        res[5] = prop.GetSpeed().ToString("0000.0");
+
+        return res;
+
+	}
+
 
 	protected virtual void PreInitUIElement()   //init UI element in main UI rectangle
 	{
@@ -41,22 +79,6 @@ public class Choosable : MonoBehaviour
 
         if(UIItem!=null){
             
-            //UIItem.obj.GetComponent<Transform>().SetParent(parent, false);
-
-            //RectTransform rt = UIItem.obj.GetComponent<RectTransform>();
-			//rt.position.Set(600, 0, 0);
-			//UIItem.Background.anchoredPosition.Set(0.5f, 0.0f);
-            //print(UIItem.Background.localPosition);
-            //UIItem.Background.localPosition.Set(100, 100, 100);
-            //print(UIItem.Background.localPosition);  
-			//set position to bottom middle
-			
-			//print("set data");
-			UIItem.Background.pivot.Set(0.5f, 0.0f);
-			UIItem.Background.anchorMax.Set(0.5f, 0.0f);
-			UIItem.Background.anchorMin.Set(0.5f, 0.0f);
-			UIItem.Background.position.Set(0, 0, 0);
-
             UIItem.Background.pivot=new Vector2(0.5f, 0.0f);
 			UIItem.Background.anchorMax= new Vector2(0.5f, 0.0f);
 			UIItem.Background.anchorMin= new Vector2(0.5f, 0.0f);
@@ -64,41 +86,16 @@ public class Choosable : MonoBehaviour
 
             UIItem.obj.GetComponent<Transform>().SetParent(parent, false);
 			
-			//UIItem.Background.
 
 		}
-            //print(ele.resourceURL);
-            //Transform rect = canvas.transform.Find("MainRect");
-           // ele.initUI(rect,null);
 
-            //adjust position of UI 
-           // ele.setPosition(new Vector3(initlen + 80.0f * i++, 0));
-
-           //GlobalRef.mainModel.callBackHashTable.Add(ele.obj, ele.highlightCallback);
-
-            //TODO
          UIItem.setActive(false);
-			/*TODO set position and size*/
-		
+
 	}
 
 
-    /*
-    public void addUIElement(string url, string instruction, UnityAction callback, callback highlightCallback, int flag = 1)
-	{
-        UIElement uie = new UIElement(url, instruction, callback, highlightCallback, flag);
-
-		UIItem.Add(uie);
-
-        //print("add success!");
-
-	}*/
-	// Update is called once per frame
-	
-
     public void hideUI(){
         UIItem.setActive(false);
-
     }
 
 
@@ -119,11 +116,23 @@ public class Choosable : MonoBehaviour
         hideUI();
     }
     public virtual void OnClick(Vector3 ScreenPoint){
-        print(name + " been click, enable = "+enable);
-        if(enable != true){
-            return;
+
+        if(GlobalRef.mainView.preSkill!=null){      //before this point, there's some skill been used
+            //TODO add animation
+            var skill = GlobalRef.mainView.preSkill;
+            skill.invoke(skill.preFocus.GetComponent<Choosable>().prop, prop);
+            GlobalRef.mainView.preSkill = null;
+
+        }else{
+			if (enable != true)
+			{
+				return;
+			}
+			displayUI(GlobalRef.canvas);
+
         }
-        displayUI(GlobalRef.canvas);
+
+
     }
 
 }

@@ -12,6 +12,8 @@ public class MonsterProperties
 
     public float life;
 
+    public string type;
+
     protected float frequency;
 	protected float attackRange;
 
@@ -19,8 +21,18 @@ public class MonsterProperties
     public float armor;
 
     public List<Effect> effectList;
-    public Vector3 pos;
+    public List<Skill> Skill;
 
+    public Vector3 pos;
+    public MonsterProperties(List<Skill> Skill){
+        foreach(var skill in Skill){
+            effectList.Add(skill.getEffect());
+        }
+    }
+	public MonsterProperties()
+	{
+        Skill = null;
+	}
 	public virtual void SetFrequency(float f)
 	{
 
@@ -38,6 +50,13 @@ public class MonsterProperties
 	{
 		return attackRange;
 	}
+    public virtual float GetAttack(){
+        return attack;
+    }
+	public virtual float GetSpeed()
+	{
+		return speed;
+	}
 	public virtual ArmorType GetArmortype()
 	{
 		return ArmorType.LIGHT;
@@ -48,7 +67,9 @@ public class MonsterProperties
 	public virtual float getArmorNum()
 	{
         float arm = armor;
+
         if (effectList == null) return armor;
+
         foreach (Effect eff in effectList){
             arm *= eff.GetArmorInfluence();
         }
@@ -66,7 +87,7 @@ public class Goblin:MonsterProperties
         turnSpeed = 2.0f;
         totalSpeed = speed / 7.0f;
         life = 30;
-
+        type = "Monster";
         armor = 1;
         attack = 5;
         this.pos = pos;

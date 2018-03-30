@@ -1,7 +1,8 @@
 using UnityEngine;
-
+using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.Events;
 public class Monster : Choosable,Attackable
 {
     // Use this for initialization
@@ -14,12 +15,14 @@ public class Monster : Choosable,Attackable
     Navigator navigator;
     Transform transform;
 
+    //public string UITag = "Monster";
+
     int curNavi = 0;
     Vector3 curDest;
 
 
     //need to set for every enemy
-    public MonsterProperties prop;
+
 
     private float deltaTime;
     public int ID;
@@ -27,16 +30,13 @@ public class Monster : Choosable,Attackable
     bool isDied = false;
 
 
-
 	void Awake()
 	{
+        UITag = "Monster";
 
 		navigator = GameObject.FindGameObjectWithTag("Navi").GetComponent<Navigator>();
 
-
-
 		transform = GetComponent<Transform>();
-
         transform.LookAt(navigator.naviPoint[2]);
         prop = new Goblin(transform.position);
 
@@ -126,20 +126,27 @@ public class Monster : Choosable,Attackable
         transform.position = (transform.position + dir*prop.speed*deltaTime);
 
     }
+    void updateState(){
+		updateAnimState();
+		updateBloodUI();
+    }
 	// Update is called once per frame
 	void Update()
     {
-        updateAnimState();
+        updateState();
 
-        updateBloodUI();
         slider.value = prop.life;
+
         if(isDied){
 
             return;
         }
+
         this.deltaTime = Time.deltaTime;
+
         updateNavi();
         updatePos();
+
         Vector3 cur = (GetComponent<Transform>().position - dest);
         if (cur.magnitude < 1.1f){
             //arrive destination
@@ -168,6 +175,7 @@ public class Monster : Choosable,Attackable
 
 
         if (prop.life<=0){
+            prop.life = 0;
             isDied = true;
             GlobalRef.mainModel.EnemyDied(ID);
         }

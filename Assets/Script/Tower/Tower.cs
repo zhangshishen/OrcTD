@@ -47,9 +47,6 @@ public class Tower : Choosable, MessageReceiver
         //Debug.Log(GetComponent<Transform>().position);
     }
 
-    public void uicallback0(){
-        
-    }
 
 
     //Transform transform;
@@ -83,8 +80,7 @@ public class Tower : Choosable, MessageReceiver
     }
 
 	protected void Update() {
-
-
+        
         if(attackerbase!=null){
             attackerbase.Update();
         }
@@ -93,5 +89,6 @@ public class Tower : Choosable, MessageReceiver
 		if(attackerbase.targetID!=-1){
             setRotate(model.getEnemyByID(attackerbase.targetID).getTransform());
         }
+
 	}
 }

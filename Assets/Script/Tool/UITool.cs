@@ -6,12 +6,23 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
+public class UIButton{
+    
+    public string URL;  // name should be registe
+    public UnityAction callback;
+    //public RectTransform rect;
+    public UIButton(string url,UnityAction ua){
+        URL = url;
+        callback = ua;
+    }
+
+}
 
 public class UIConfig{      //config of UIElement 
-    
-    public bool order = true;  //true = row, false = column
-    public bool align = true;
 
+    public bool order = false;  //true = row, false = column
+    public bool align = true;
+    public float alignInterval = 100;
     //public float space = 10.0f;
 
     public string backGroundImageURL;   
@@ -133,7 +144,7 @@ public class UIElement
             defaultInverval = height / (float)child.Count;
 			if (config.align)
 			{
-				defaultInverval = 10;
+                defaultInverval = config.alignInterval;
 			}
 
             IntervalX = 0;
@@ -148,15 +159,15 @@ public class UIElement
             pivot.y = 0.5f;
 
             defaultInverval = width / (float)child.Count;
-			if (config.align)   //not average
+			if (config.align)
 			{
-				defaultInverval = 10;
+				defaultInverval = config.alignInterval;
 			}
 
 			IntervalX = defaultInverval;
 			IntervalY = 0;
 
-			curPointX = width + 15;
+			curPointX = 15;
 			curPointY = height /2;
         }
 
@@ -165,17 +176,23 @@ public class UIElement
         foreach (var ele in child)
 		{
             Transform cur = Background.GetComponent<Transform>();
-            ele.Background.GetComponent<Transform>().SetParent(cur);
 
+            Debug.Log("curPointX = " + curPointX);
+            Debug.Log("curPointY = " + curPointY);
             //set scale
             if (config.intervalScale.Length>curCount){    //interval of 
                 IntervalX *= config.intervalScale[curCount];
                 IntervalY *= config.intervalScale[curCount];
             }
-
-            ele.Background.pivot.Set(pivot.x,pivot.y);
-            ele.Background.position.Set(curPointX + IntervalX, curPointY + IntervalY, 0);
+            ele.Background.anchorMax = new Vector2(0, 0);
+            ele.Background.anchorMin = new Vector2(0, 0);
+            ele.Background.pivot = new Vector2(pivot.x,pivot.y);
+            ele.Background.localPosition = new Vector3(curPointX, curPointY , 0);
             /*TODO set position and size*/
+            curPointX += IntervalX;
+            curPointY += IntervalY;
+
+            ele.Background.GetComponent<Transform>().SetParent(cur, false);
             curCount++;
 		}
     }
